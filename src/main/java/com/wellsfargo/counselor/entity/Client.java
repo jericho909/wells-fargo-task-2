@@ -1,6 +1,5 @@
 package com.wellsfargo.counselor.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,11 +11,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Advisor {
-
+public class Client {
     @Id
     @GeneratedValue()
-    private long advisorId;
+    private Long clientId;
 
     @Column(nullable = false)
     private String firstName;
@@ -33,7 +31,10 @@ public class Advisor {
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "advisor")
-    private List<Client> clients;
+    @ManyToOne
+    @JoinColumn(name = "advisor_id", referencedColumnName = "advisorId")
+    private Advisor advisor;
 
+    @OneToMany(mappedBy = "client")
+    private List<Portfolio> portfolios;
 }
